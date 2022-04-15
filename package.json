@@ -1,20 +1,27 @@
 {
-  "name": "compugraf_test_suite",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "12.1.5",
-    "react": "18.0.0",
-    "react-dom": "18.0.0"
-  },
-  "devDependencies": {
-    "eslint": "8.13.0",
-    "eslint-config-next": "12.1.5"
-  }
+	"name": "compugraf_test_suite",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"server": "node server/index.js"
+	},
+	"dependencies": {
+		"axios": "^0.26.1",
+		"dotenv": "^16.0.0",
+		"express": "^4.17.3",
+		"mongodb": "^4.5.0",
+		"mongoose": "^6.3.0",
+		"next": "12.1.5",
+		"nodemon": "^2.0.15",
+		"react": "18.0.0",
+		"react-dom": "18.0.0"
+	},
+	"devDependencies": {
+		"eslint": "8.13.0",
+		"eslint-config-next": "12.1.5"
+	}
 }
