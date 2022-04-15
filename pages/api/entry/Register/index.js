@@ -26,16 +26,25 @@ export default function handler(req, res) {
 			Person.init()
 				.then(() => {
 					data.save((err, data) => {
-						if (err.message.indexOf("duplicate key error") !== -1)
+						if (err.message.indexOf("duplicate key error") !== -1) {
 							return res.status(406).json({
 								error: "Duplicate key error",
 								errorMesage: err.message,
 							});
-						if (err)
-							res.status(503).json({
+						}
+						if (err.message.indexOf("Person validation failed") !== -1) {
+							return res.status(406).json({
+								error: "Missing required paramethers",
+								errorMesage: err.message,
+							});
+						}
+						if (err) {
+							return res.status(503).json({
 								error: "failed to save data",
 								errorMessage: err.message,
 							});
+						}
+
 						return res.status(200).json(data); //If successfull
 					});
 				})
