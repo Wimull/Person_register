@@ -1,0 +1,5 @@
+.p {
+	@apply w-auto h-auto shadow-sm shadow-black;
+	@apply bg-red-600 rounded-2xl;
+	@apply items-center align-middle text-white font-semibold text-xl;
+}
