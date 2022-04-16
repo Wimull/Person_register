@@ -1,5 +1,6 @@
 .p {
-	@apply w-auto h-auto shadow-sm shadow-black;
-	@apply bg-red-600 rounded-2xl;
-	@apply items-center align-middle text-white font-semibold text-xl;
+	@apply empty:hidden;
+	@apply w-auto h-auto  my-7 p-6;
+	@apply bg-red-200 bg-opacity-70 min-w-full rounded;
+	@apply items-center align-middle justify-center text-black font-normal text-base;
 }

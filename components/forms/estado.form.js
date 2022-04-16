@@ -1,37 +1,51 @@
 import InputMask from "react-input-mask";
+import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 
-export function InputEstado(param) {
+export function InputEstado(props) {
+	const { register } = useForm();
 	const estados = [
-		{ name: "AC" },
-		{ name: "AL" },
-		{ name: "AP" },
-		{ name: "AM" },
-		{ name: "BA" },
-		{ name: "CE" },
-		{ name: "DF" },
-		{ name: "ES" },
-		{ name: "GO" },
-		{ name: "MA" },
-		{ name: "MT" },
-		{ name: "MS" },
-		{ name: "MG" },
-		{ name: "PA" },
-		{ name: "PB" },
-		{ name: "PR" },
-		{ name: "PE" },
-		{ name: "PI" },
-		{ name: "RJ" },
-		{ name: "RN" },
-		{ name: "RS" },
-		{ name: "RO" },
-		{ name: "RR" },
-		{ name: "SC" },
-		{ name: "SP" },
-		{ name: "SE" },
-		{ name: "TO" },
+		"AC",
+		"AL",
+		"AP",
+		"AM",
+		"BA",
+		"CE",
+		"DF",
+		"ES",
+		"GO",
+		"MA",
+		"MT",
+		"MS",
+		"MG",
+		"PA",
+		"PB",
+		"PR",
+		"PE",
+		"PI",
+		"RJ",
+		"RN",
+		"RS",
+		"RO",
+		"RR",
+		"SC",
+		"SP",
+		"SE",
+		"TO",
 	];
-	const [estado, setEstado] = useState("Estado");
 
-	return <></>;
+	return (
+		<InputMask
+			mask="aa"
+			placeholder={"Estado"}
+			name={props.name}
+			{...register("estado", {
+				required: {
+					value: props.required,
+					message: "Estado não foi preenchido. ",
+				},
+				onChange: props.onChange,
+			})}
+		/>
+	);
 }

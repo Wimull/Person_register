@@ -1,7 +1,10 @@
+//TODO add validation to all filds / add fetching
+
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InputCpf } from "./cpf.form";
 import { InputCep } from "./cep.form";
+import { InputEstado } from "./estado.form";
 import Styles from "./forms.module.css";
 
 export function Form(props) {
@@ -29,12 +32,21 @@ export function Form(props) {
 	const [data, setData] = useState(dataSchema);
 
 	function handleDataChange(e) {
-		setData({
-			...data,
-			[e.target.name]: e.target.value.trim(),
-		});
+		if (e.target.name === "estado") {
+			console.log(data);
+			setData({
+				...data,
+				[e.target.name]: e.target.value.toUpperCase(),
+			});
+		} else {
+			setData({
+				...data,
+				[e.target.name]: e.target.value.trim(),
+			});
+		}
 	}
 	function onSubmit(e) {
+		console.log(errors);
 		e.preventDefault;
 		console.log(data);
 	}
@@ -100,17 +112,10 @@ export function Form(props) {
 				onChange={handleDataChange}
 				required={requireAllCamps}
 			/>
-			<input
+			<InputEstado
 				placeholder={"Estado"}
 				name={"estado"}
 				onChange={handleDataChange}
-				{...register("estado", {
-					required: {
-						value: requireAllCamps,
-						message: "Estado não foi preenchido. ",
-					},
-					onChange: handleDataChange,
-				})}
 			/>
 			<input
 				placeholder={"Cidade"}
