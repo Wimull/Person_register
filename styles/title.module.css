@@ -1,0 +1,12 @@
+.title {
+	@apply my-6;
+}
+.title h1 {
+	@apply align-middle justify-center max-w-full;
+	@apply text-center font-bold text-2xl text-rose-700;
+	@apply md:text-4xl;
+}
+.title hr {
+	@apply mx-auto max-w-7xl h-[3px];
+	@apply bg-gradient-to-r from-transparent via-rose-700 to-transparent;
+}

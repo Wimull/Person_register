@@ -1,6 +1,18 @@
-.p {
+.erros {
+	@apply grid grid-cols-1;
+	@apply md:grid-cols-3 lg:grid-cols-4;
+}
+.erros span {
 	@apply empty:hidden;
-	@apply w-auto h-auto  my-7 p-6;
-	@apply bg-red-200 bg-opacity-70 min-w-full rounded;
-	@apply items-center align-middle justify-center text-black font-normal text-base;
+	@apply bg-red-200 bg-opacity-70 min-w-full pt-1 pl-2 pb-1;
+	@apply items-center align-middle justify-center text-red-700 font-normal text-base;
+}
+
+.forms {
+	@apply grid grid-cols-1 gap-1;
+	@apply justify-between;
+	@apply md:grid-cols-2 lg:grid-cols-3;
+}
+.forms input {
+	@apply px-2 my-2 min-w-fit max-w-xl mr-16;
 }
