@@ -10,10 +10,20 @@ export default function () {
 		formState: { errors },
 	} = useForm();
 	const [formData, setFormData] = useState({});
+	const [peopleRegisterd, setPeopleRegisterd] = useState({});
 
-	function onSubmit(e) {
+	async function onSubmit(e) {
 		e.preventDefault;
-		console.log(formData);
+		let getPacket = Object.keys(formData)
+			.filter((key) => formData[key] !== "") //Filters empty strings
+			.reduce((res, key) => `${res}${key}=${formData[key]}&`, "?");
+
+		let response = await fetch(
+			`http://localhost:3000/api/entry/Register${getPacket}`
+		);
+		let data = await response.json();
+		console.log(response, data);
+		setPeopleRegisterd(data);
 	}
 	return (
 		<PageTemplate>
@@ -30,7 +40,9 @@ export default function () {
 			>
 				<Buttons href="/" />
 			</Form>
-			<div></div>
+			<div>
+				<h1>{JSON.stringify(peopleRegisterd)}</h1>
+			</div>
 		</PageTemplate>
 	);
 }

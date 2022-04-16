@@ -18,6 +18,8 @@ export function Form(props) {
 		formState: { errors },
 	} = useForm();
 
+	const [cepTouched, setCepTouched] = useState({});
+
 	function handleDataChange(e) {
 		console.log(props.data);
 		switch (e.target.name) {
@@ -53,29 +55,37 @@ export function Form(props) {
 		}
 	}
 
-	function onSubmit(e) {
-		e.preventDefault;
-		console.log(props.data);
-	}
 	async function checkCep() {
 		if (!/[\d]{5}-[\d]{3}$/.test(props.data.cep)) return console.log("error");
 		let query = props.data.cep.replace(/-/g, "");
 		let response = await fetch(`https://viacep.com.br/ws/${query}/json`);
 		response.json().then((json) => {
 			let { logradouro, localidade, uf } = json;
-			setValue("logradouro", logradouro);
-			setValue("cidade", localidade);
-			setValue("estado", uf);
-
-			console.log(props.data);
+			console.log(logradouro, localidade, uf);
+			setValue("logradouro", logradouro, {});
+			setValue("cidade", localidade, {});
+			setValue("estado", uf, {});
+			props.setData({
+				...props.data,
+				logradouro: logradouro,
+				cidade: localidade,
+				estado: uf,
+			});
 		});
+	}
+	useEffect(() => {
+		checkCep();
+	}, [cepTouched]);
+
+	function capitalizeEstado() {
+		setValue("estado", props.data.estado.toUpperCase());
 	}
 
 	return (
 		<form onSubmit={handleSubmit(props.onSubmit)}>
 			<div className={Styles.forms}>
 				<input
-					placeholder={"nome"}
+					placeholder={"Nome"}
 					name={"nome"}
 					{...register("nome", {
 						required: {
@@ -111,10 +121,10 @@ export function Form(props) {
 					name={"cep"}
 					placeholder="CEP"
 					onChange={handleDataChange}
-					onBlur={checkCep}
+					onBlur={setCepTouched}
 					{...register("cep", {
 						pattern: {
-							value: /[\d]{5}-[\d]{3}$/,
+							value: /([\d]{5}-[\d]{3}$)|^$/,
 							message: "CEP inválido. ",
 						},
 						required: {
@@ -122,7 +132,7 @@ export function Form(props) {
 							message: "CEP não foi preenchido. ",
 						},
 						onChange: handleDataChange,
-						onBlur: checkCep,
+						onBlur: setCepTouched,
 					})}
 				/>
 				<InputCpf
@@ -131,7 +141,7 @@ export function Form(props) {
 					onChange={handleDataChange}
 					{...register("cpf", {
 						pattern: {
-							value: /[\d]{3}\.[\d]{3}\.[\d]{3}-[\d]{2}$/,
+							value: /([\d]{3}\.[\d]{3}\.[\d]{3}-[\d]{2}$)|^$/,
 							message: "CPF inválido. ",
 						},
 						required: {
@@ -145,6 +155,7 @@ export function Form(props) {
 					placeholder={"Estado"}
 					name={"estado"}
 					onChange={handleDataChange}
+					value={props.data.estado}
 					{...register("estado", {
 						required: {
 							value: requireAllCamps,
@@ -152,10 +163,12 @@ export function Form(props) {
 						},
 						pattern: {
 							value:
-								/(A[CLPM])|(BA)|(CE)|(DF)|(M[ATSG])|(P[ABREI])|(R[JNSOR])|(S[CPE])|(TO)/,
+								/(A[CLPM])|(BA)|(CE)|(DF)|(M[ATSG])|(P[ABREI])|(R[JNSOR])|(S[CPE])|(TO)|^$/,
 							message: "Estado inválido ",
 						},
 						onChange: handleDataChange,
+						onBlur: capitalizeEstado,
+						setValueAs: (v) => v.toUpperCase(),
 					})}
 				/>
 				<input
