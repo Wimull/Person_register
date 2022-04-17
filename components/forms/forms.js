@@ -15,10 +15,16 @@ export function Form(props) {
 		register,
 		handleSubmit,
 		setValue,
+		reset,
 		formState: { errors },
 	} = useForm();
 
 	const [cepTouched, setCepTouched] = useState({});
+
+	useEffect(() => {
+		reset();
+		props.setData({});
+	}, [props.isSubmitSuccessful]);
 
 	function handleDataChange(e) {
 		console.log(props.data);
@@ -76,10 +82,6 @@ export function Form(props) {
 	useEffect(() => {
 		checkCep();
 	}, [cepTouched]);
-
-	function capitalizeEstado() {
-		setValue("estado", props.data.estado.toUpperCase());
-	}
 
 	return (
 		<form onSubmit={handleSubmit(props.onSubmit)}>
@@ -167,7 +169,6 @@ export function Form(props) {
 							message: "Estado inválido ",
 						},
 						onChange: handleDataChange,
-						onBlur: capitalizeEstado,
 						setValueAs: (v) => v.toUpperCase(),
 					})}
 				/>

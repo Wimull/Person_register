@@ -1,10 +1,10 @@
 .botoes {
 	@apply mt-8;
-	@apply flex align-middle items-center gap-12;
+	@apply flex align-middle items-center justify-center gap-40;
 }
 
 .botoes button {
-	@apply w-auto h-auto py-3 px-6 m-6 rounded-xl;
+	@apply w-auto h-auto py-3 px-12 m-6 rounded-xl;
 	@apply text-white bg-rose-700 font-semibold text-lg antialiased;
 	@apply transition ease-in-out hover:scale-110 hover:bg-purple-800 hover:font-bold;
 	@apply active:bg-fuchsia-900 active:scale-105;
@@ -12,7 +12,7 @@
 }
 .botoes li a {
 	@apply flex items-center;
-	@apply w-auto h-auto py-3 px-6 m-6 rounded-xl border-[1px];
+	@apply w-auto h-auto py-3 px-12 m-6 rounded-xl border-[1px];
 	@apply bg-rose-200 border-opacity-50 border-rose-700 font-semibold;
 	@apply transition-all ease-in-out hover:scale-110;
 	@apply active:scale-105;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PageTemplate, Form, Buttons } from "../../components";
+import { PageTemplate, Form, Buttons, PeopleTable } from "../../components";
 import { useForm } from "react-hook-form";
 import Styles from "../../styles/title.module.css";
 export default function () {
@@ -29,7 +29,7 @@ export default function () {
 			>
 				<Buttons href="/" />
 			</Form>
-			<div></div>
+			<PeopleTable />
 		</PageTemplate>
 	);
 }

@@ -8,7 +8,7 @@ export function InputEstado(props) {
 	return (
 		<InputMask
 			mask="aa"
-			placeholder={"Estado"}
+			placeholder={"Estado (UF)"}
 			name={"estado"}
 			value={props.value}
 			maskChar=""

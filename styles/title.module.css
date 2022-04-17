@@ -1,5 +1,5 @@
 .title {
-	@apply my-6;
+	@apply mt-6 mb-16;
 }
 .title h1 {
 	@apply align-middle justify-center max-w-full;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PageTemplate, Form, Buttons } from "../../components";
+import { PageTemplate, Form, Buttons, PeopleTable } from "../../components";
 import { useForm } from "react-hook-form";
 import Styles from "../../styles/title.module.css";
 
@@ -10,7 +10,8 @@ export default function () {
 		formState: { errors },
 	} = useForm();
 	const [formData, setFormData] = useState({});
-	const [peopleRegisterd, setPeopleRegisterd] = useState({});
+	const [peopleRegistered, setPeopleRegistered] = useState({});
+	const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(0);
 
 	async function onSubmit(e) {
 		e.preventDefault;
@@ -21,9 +22,10 @@ export default function () {
 		let response = await fetch(
 			`http://localhost:3000/api/entry/Register${getPacket}`
 		);
+		if (response.status == 200) setIsSubmitSuccessful(isSubmitSuccessful + 1);
 		let data = await response.json();
 		console.log(response, data);
-		setPeopleRegisterd(data);
+		setPeopleRegistered(data);
 	}
 	return (
 		<PageTemplate>
@@ -36,12 +38,14 @@ export default function () {
 				data={formData}
 				setData={setFormData}
 				onSubmit={onSubmit}
+				isSubmitSuccessful={isSubmitSuccessful}
 				{...register("formulário")}
 			>
 				<Buttons href="/" />
 			</Form>
+			<PeopleTable />
 			<div>
-				<h1>{JSON.stringify(peopleRegisterd)}</h1>
+				<h1>{JSON.stringify(peopleRegistered)}</h1>
 			</div>
 		</PageTemplate>
 	);

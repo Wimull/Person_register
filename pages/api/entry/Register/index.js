@@ -26,6 +26,7 @@ export default function handler(req, res) {
 			Person.init()
 				.then(() => {
 					data.save((err, data) => {
+						if (!err) return res.status(200).json(data);
 						if (err.message.indexOf("duplicate key error") !== -1) {
 							return res.status(406).json({
 								error: "Duplicate key error",
@@ -45,7 +46,7 @@ export default function handler(req, res) {
 							});
 						}
 
-						return res.status(200).json(data); //If successfull
+						//If successfull
 					});
 				})
 				.catch((error) => {

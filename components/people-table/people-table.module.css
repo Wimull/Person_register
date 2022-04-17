@@ -1,0 +1,27 @@
+.forms {
+	@apply h-full my-10 mx-10 align-middle justify-center items-center;
+	@apply border-2 border-rose-900 border-opacity-50;
+}
+.header > div {
+	@apply bg-rose-700 text-center text-lg font-semibold text-white;
+	@apply hover:bg-rose-800;
+}
+.row {
+	@apply even:bg-rose-50;
+}
+.row div,
+.header > div {
+	@apply px-2;
+}
+
+.search label {
+	@apply flex my-6 mx-10 max-w-full align-middle justify-center;
+}
+.search span {
+	@apply flex mr-3;
+	@apply text-xl font-bold;
+}
+.search input {
+	@apply flex w-full h-auto rounded-lg;
+	@apply ring-1 ring-offset-2 ring-offset-rose-500 ring-rose-900;
+}

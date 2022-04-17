@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
-import { PageTemplate } from "../components";
+import { PageTemplate, PeopleTable } from "../components";
 import styles from "../styles/Home.module.css";
+import Styles from "../styles/title.module.css";
 
 export default function Home() {
 	return (
@@ -14,9 +15,11 @@ export default function Home() {
 				</Head>
 			</div>
 			<PageTemplate>
-				<div>
-					<h1>Teste</h1>
+				<div className={Styles.title}>
+					<h1>Lista das Pessoas Registradas</h1>
+					<hr />
 				</div>
+				<PeopleTable />
 			</PageTemplate>
 		</>
 	);

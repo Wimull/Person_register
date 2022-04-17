@@ -10,7 +10,9 @@
 		"server": "node server/index.js"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.9.0",
 		"@headlessui/react": "^1.5.0",
+		"@table-library/react-table-library": "^2.0.32",
 		"axios": "^0.26.1",
 		"dotenv": "^16.0.0",
 		"express": "^4.17.3",
