@@ -4,7 +4,7 @@ import {
 	Form,
 	Buttons,
 	PeopleTable,
-	fetchPerson,
+	fetchAllPersons,
 } from "../../components";
 import { useForm } from "react-hook-form";
 import Styles from "../../styles/title.module.css";
@@ -22,7 +22,7 @@ export default function () {
 	const [errorMessageVisible, setErrorMessageVisible] = useState("hidden");
 
 	const getInitialState = async () => {
-		setPeopleRegistered(await fetchPerson());
+		setPeopleRegistered(await fetchAllPersons());
 	};
 	useEffect(() => {
 		getInitialState();
