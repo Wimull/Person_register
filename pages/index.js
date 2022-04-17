@@ -14,7 +14,7 @@ export default function Home() {
 	}, []);
 
 	function onSelectChange(action, state) {
-		console.log(action, state);
+		return;
 	}
 	return (
 		<>

@@ -1,11 +1,9 @@
 const Person = require("../../person_model");
 
 export default function handler(req, res) {
-	console.log(req.method);
 	if (req.method === "GET") {
 		let request = {};
 		for (let key in req.query) request[key] = { $regex: req.query[key] }; //Implementation of non-exact match
-		console.log(request);
 		Person.find(request, (err, data) => {
 			if (err)
 				return res
@@ -15,7 +13,6 @@ export default function handler(req, res) {
 		});
 	}
 	if (req.method === "POST") {
-		console.log(req.body);
 		try {
 			let data = new Person(req.body);
 			Person.init()
