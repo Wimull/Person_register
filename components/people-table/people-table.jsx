@@ -14,145 +14,6 @@ import {
 import { useRowSelect, HeaderCellSelect,CellSelect,SelectTypes,} from '@table-library/react-table-library/select';
 import { useTheme } from '@table-library/react-table-library/theme';
 
-const testJson = [
-  {
-    "id": "1",
-    "_id": "6258ccf87ac2516151bf8f1d",
-    "nome": "Ana",
-    "sobrenome": "Silva",
-    "nacionalidade": "Brasil",
-    "cep": "08280-630",
-    "estado": "São Paulo",
-    "cidade": "São Paulo",
-    "logradouro": "Morubixaba 712",
-    "email": "aninhasilva@tutanota.com",
-    "telefone": "(11)94744-1928",
-    "__v": 0,
-    "cpf": "123-456-789-70"
-  },
-  {
-    "id": "2",
-    "_id": "6259891eec59f2b33731ecde",
-    "nome": "Mariana  ",
-    "sobrenome": "Alves",
-    "nacionalidade": "Brasil",
-    "cep": "88813-586",
-    "estado": "Santa Catarina",
-    "cidade": "Criciúma",
-    "logradouro": "Morubixaba 712",
-    "email": "MarianaRibeiroAlves@armyspy.com",
-    "telefone": "(48)97699-8369",
-    "__v": 0,
-    "cpf": "223-456-789-70"
-  },
-  {
-    "id": "3",
-    "_id": "6259b0ac84724a0684e031d2",
-    "nome": "Isabela",
-    "sobrenome": "Oliveira",
-    "nacionalidade": "Brasil",
-    "cep": "36202-166",
-    "cpf": "516.464.596-36",
-    "estado": "MG",
-    "cidade": "Barbacena",
-    "logradouro": "Rua Irene Piazzi, 1138",
-    "email": "IsabelaMeloOliveira@jourrapide.com",
-    "telefone": "(32) 5011-7654",
-    "__v": 0
-  },
-  {
-    "id": "4",
-    "_id": "6259b0af84724a0684e031d5",
-    "nome": "Fernanda",
-    "sobrenome": "Fernandes",
-    "nacionalidade": "Brasil",
-    "cep": "85903-707",
-    "cpf": "798.534.527-23",
-    "estado": "Parana",
-    "cidade": "Toledo",
-    "logradouro": "Rua Cláudio Areco, 517",
-    "email": "FernandaBarrosFernandes@teleworm.us",
-    "telefone": "(45)99612-9907",
-    "__v": 0
-  },
-  {
-    "id": "5",
-    "_id": "625b21da898495f0a1c59963",
-    "nome": "Alice",
-    "sobrenome": "Margatroid",
-    "nacionalidade": "Japão",
-    "cep": "12954-428",
-    "cpf": "553.456.957-33",
-    "estado": "SP",
-    "cidade": "Atibaia",
-    "logradouro": "Rua do Rochedo",
-    "email": "alice.margatroid",
-    "telefone": "(11) 3784-2009",
-    "__v": 0
-  },
-  {
-    "id": "6",
-    "_id": "625b2348898495f0a1c59967",
-    "nome": "Kauê",
-    "sobrenome": "Dias",
-    "nacionalidade": "Brasil",
-    "cep": "66623-308",
-    "cpf": "462.994.516-45",
-    "estado": "PA",
-    "cidade": "Belém",
-    "logradouro": "Passagem P-4",
-    "email": "KaueMeloDias@teleworm.us",
-    "telefone": "(91) 9517-8834",
-    "__v": 0
-  },
-  {
-    "id": "7",
-    "_id": "625b23e9898495f0a1c59969",
-    "nome": "Gabrielle",
-    "sobrenome": "Oliveira",
-    "nacionalidade": "Brazil",
-    "cep": "52131-591",
-    "cpf": "408.510.621-05",
-    "estado": "PE",
-    "cidade": "Recife",
-    "logradouro": "1ª Travessa da Sucupira",
-    "email": "GabrielleSouzaOliveira@dayrep.com",
-    "telefone": "(81) 8250-3441",
-    "__v": 0
-  },
-  {
-    "id": "8",
-    "_id": "625b25aa898495f0a1c5996b",
-    "nome": "Vinicius",
-    "sobrenome": "Lima",
-    "nacionalidade": "Brasil",
-    "cep": "06326-120",
-    "cpf": "832.268.607-20",
-    "estado": "SP",
-    "cidade": "Carapicuíba",
-    "logradouro": "Rua Pará",
-    "email": "ViniciusSilvaLima@armyspy.com",
-    "telefone": "(11) 3543-3552",
-    "__v": 0
-  },
-  {
-    "id": "9",
-    "_id": "625b2629898495f0a1c5996d",
-    "nome": "Maria",
-    "sobrenome": "Ferreira",
-    "nacionalidade": "Brasil",
-    "cep": "06390-040",
-    "cpf": "914.373.597-52",
-    "estado": "SP",
-    "cidade": "Carapicuíba",
-    "logradouro": "Rua Maura dos Santos",
-    "email": "MariaCardosoFerreira@rhyta.com",
-    "telefone": "(11) 5637-8248",
-    "__v": 0
-  }
-]
-
-
 
 
 export function PeopleTable(props){
@@ -225,10 +86,10 @@ export function PeopleTable(props){
       console.log(search)
       console.log(action, state);
     }
+
     const select = useRowSelect(data, {
       onChange: props.onSelectChange,
     },
-    
     {
       rowSelect: SelectTypes.SingleSelect,
       buttonSelect: SelectTypes.SingleSelect,
