@@ -10,6 +10,7 @@ export default function handler(req, res) {
 	const id = { cpf: personCPF[0] };
 	console.log(id);
 	if (req.method === "GET") {
+		//Find info by ID
 		console.log(req.method);
 		try {
 			Person.findOne(id, (err, data) => {
