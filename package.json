@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@emotion/react": "^11.9.0",
 		"@headlessui/react": "^1.5.0",
+		"@material-ui/core": "^4.12.4",
 		"@table-library/react-table-library": "^2.0.32",
 		"axios": "^0.26.1",
 		"dotenv": "^16.0.0",

@@ -6,18 +6,15 @@ import {
 	PeopleTable,
 	fetchPerson,
 } from "../../components";
-import { useForm } from "react-hook-form";
 import Styles from "../../styles/title.module.css";
 
 export default function () {
-	const {
-		handleSubmit,
-		register,
-		formState: { errors },
-	} = useForm();
 	const [formData, setFormData] = useState({});
 	const [peopleRegistered, setPeopleRegistered] = useState([{}]);
 	const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(0);
+	const [errorMessage, setErrorMessage] = useState("");
+	const [errorMessageVisible, setErrorMessageVisible] = useState("hidden");
+
 	const getInitialState = async () => {
 		setPeopleRegistered(await fetchPerson());
 	};
@@ -40,11 +37,23 @@ export default function () {
 			},
 			body: postPacket,
 		});
-		if (response.status === 200) setIsSubmitSuccessful(isSubmitSuccessful + 1);
 		let data = [await response.json()];
-		data.map((obj) => (obj.id = obj.cpf.replace(/[\.-]/g, "")));
-		console.log(response, data);
-		setPeopleRegistered(data);
+		if (response.status === 406) {
+			setErrorMessageVisible("visible");
+			setErrorMessage("Erro: CPF já está cadastrado");
+			setPeopleRegistered([{}]);
+			return;
+		} else if (response.status === 200) {
+			setErrorMessageVisible("hidden");
+			setErrorMessage("");
+			setIsSubmitSuccessful(isSubmitSuccessful + 1);
+			data.map((obj) => (obj.id = obj.cpf.replace(/[\.-]/g, "")));
+			setPeopleRegistered(data);
+		} else {
+			setErrorMessageVisible("visible");
+			setErrorMessage(`Erro ${response.status}: ${JSON.stringify(data)}`);
+			setPeopleRegistered([{}]);
+		}
 	}
 
 	function onSelectChange(action, state) {
@@ -63,10 +72,12 @@ export default function () {
 				setData={setFormData}
 				onSubmit={onSubmit}
 				isSubmitSuccessful={isSubmitSuccessful}
-				{...register("formulário")}
 			>
 				<Buttons href="/" label={"Enviar"} />
 			</Form>
+			<div className={Styles.erro} style={{ visibility: errorMessageVisible }}>
+				<span>{errorMessage}</span>
+			</div>
 			<PeopleTable data={peopleRegistered} onSelectChange={onSelectChange} />
 		</PageTemplate>
 	);

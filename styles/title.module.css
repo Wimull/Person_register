@@ -10,3 +10,9 @@
 	@apply mx-auto max-w-7xl h-[3px];
 	@apply bg-gradient-to-r from-transparent via-rose-700 to-transparent;
 }
+.erro {
+	@apply flex max-w-full mx-10;
+	@apply bg-red-200 bg-opacity-70 max-w-full p-4;
+	@apply items-center align-middle justify-start text-red-700 font-normal text-base;
+	@apply font-semibold text-xl;
+}

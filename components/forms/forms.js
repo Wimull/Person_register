@@ -16,6 +16,7 @@ export function Form(props) {
 		handleSubmit,
 		setValue,
 		reset,
+		resetField,
 		formState: { errors },
 	} = useForm();
 
@@ -23,6 +24,7 @@ export function Form(props) {
 
 	useEffect(() => {
 		reset();
+		resetField("estado");
 		props.setData({});
 	}, [props.isSubmitSuccessful]);
 
