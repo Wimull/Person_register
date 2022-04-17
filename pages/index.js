@@ -1,14 +1,13 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { fetchPerson, PageTemplate, PeopleTable } from "../components";
+import { fetchAllPersons, PageTemplate, PeopleTable } from "../components";
 import styles from "../styles/Home.module.css";
 import Styles from "../styles/title.module.css";
 
 export default function Home() {
 	const [data, setData] = useState([{}]);
 	const getInitialState = async () => {
-		setData(await fetchPerson());
+		setData(await fetchAllPersons());
 	};
 	useEffect(() => {
 		getInitialState();

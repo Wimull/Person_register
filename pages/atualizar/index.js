@@ -5,7 +5,7 @@ import {
 	Form,
 	Buttons,
 	PeopleTable,
-	fetchPerson,
+	fetchAllPersons,
 	fetchPersonByCpf,
 } from "../../components";
 import Styles from "../../styles/title.module.css";
@@ -23,7 +23,7 @@ export default function () {
 	}, []);
 
 	const getInitialState = async () => {
-		setPeopleRegistered(await fetchPerson());
+		setPeopleRegistered(await fetchAllPersons());
 	};
 
 	function onSelectChange(action, state) {

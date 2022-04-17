@@ -4,7 +4,7 @@ import {
 	Form,
 	DeleteButtons,
 	PeopleTable,
-	fetchPerson,
+	fetchAllPersons,
 	fetchPersonByCpf,
 } from "../../components";
 
@@ -18,7 +18,7 @@ export default function () {
 	const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(0);
 
 	const getInitialState = async () => {
-		setPeopleRegistered(await fetchPerson());
+		setPeopleRegistered(await fetchAllPersons());
 	};
 	useEffect(() => {
 		getInitialState();

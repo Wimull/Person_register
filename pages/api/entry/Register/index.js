@@ -1,14 +1,10 @@
-//https://nextjs.org/docs/api-routes/introduction
-
-//TODO Make Dynamic API route according to REST  https://nextjs.org/docs/api-routes/dynamic-api-routes https://docs.bmc.com/docs/ars2002/examples-of-using-the-rest-api-to-get-update-and-delete-an-entry-from-a-form-909638131.html
-const express = require("express");
 const Person = require("../../person_model");
 
 export default function handler(req, res) {
 	console.log(req.method);
 	if (req.method === "GET") {
 		let request = {};
-		for (let key in req.query) request[key] = { $regex: req.query[key] };
+		for (let key in req.query) request[key] = { $regex: req.query[key] }; //Implementation of non-exact match
 		console.log(request);
 		Person.find(request, (err, data) => {
 			if (err)

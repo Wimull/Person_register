@@ -7,6 +7,18 @@ import { InputCep } from "./cep.form";
 import { InputEstado } from "./estado.form";
 import Styles from "./forms.module.css";
 
+const defaultValues = {
+	nome: "",
+	sobrenome: "",
+	nacionalidade: "",
+	cep: "",
+	cpf: "",
+	cidade: "",
+	logradouro: "",
+	email: "",
+	telefone: "",
+};
+
 export function Form(props) {
 	let requireAllCamps = true;
 	if (props.method !== "POST") requireAllCamps = false;
@@ -16,23 +28,22 @@ export function Form(props) {
 		handleSubmit,
 		setValue,
 		reset,
-		resetField,
+		clearErrors,
 		formState: { errors },
 	} = useForm();
 
 	const [cepTouched, setCepTouched] = useState({});
 
 	useEffect(() => {
-		reset();
-		resetField("estado");
+		reset(defaultValues);
 		props.setData({});
 	}, [props.isSubmitSuccessful]);
 
 	function handleDataChange(e) {
-		console.log(props.data);
-		switch (e.target.name) {
+		switch (
+			e.target.name //The two first case are there for they need to be treated before passing to setFormData
+		) {
 			case "estado":
-				console.log(e.target.value.toUpperCase());
 				setValue("estado", e.target.value.toUpperCase());
 				props.setData({
 					...props.data,
@@ -47,7 +58,7 @@ export function Form(props) {
 					[e.target.name]: e.target.value.replace(/[\.-]/g, ""),
 				});
 				break;
-			case "cep":
+			case "cep": //For some reason the default opcition wasn't working properly for this form, so this is a workaround for that
 				setValue("cep", e.target.value);
 				props.setData({
 					...props.data,
@@ -64,8 +75,9 @@ export function Form(props) {
 	}
 
 	async function checkCep() {
-		if (!/[\d]{5}-[\d]{3}$/.test(props.data.cep)) return console.log("error");
-		let query = props.data.cep.replace(/-/g, "");
+		//Checks cep info in an external API and then changes the current form to match the results.
+		if (!props.data.cep) return;
+		let query = props.data.cep?.replace(/-/g, "");
 		let response = await fetch(`https://viacep.com.br/ws/${query}/json`);
 		response.json().then((json) => {
 			let { logradouro, localidade, uf } = json;
@@ -79,6 +91,7 @@ export function Form(props) {
 				cidade: localidade,
 				estado: uf,
 			});
+			clearErrors(["logradouro", "cidade", "estado"]);
 		});
 	}
 	useEffect(() => {
@@ -86,6 +99,8 @@ export function Form(props) {
 	}, [cepTouched]);
 
 	return (
+		//form submition is done externally so as to better manipulate the button and to fragment this component
+		// "cep", "estado" and "cidade" all have their external component ((...).form.js) so as to implement input mask
 		<form onSubmit={handleSubmit(props.onSubmit)}>
 			<div className={Styles.forms}>
 				<input
@@ -126,6 +141,7 @@ export function Form(props) {
 					placeholder="CEP"
 					onChange={handleDataChange}
 					onBlur={setCepTouched}
+					isSubmitSuccessful={props.isSubmitSuccessful}
 					{...register("cep", {
 						pattern: {
 							value: /([\d]{5}-[\d]{3}$)|^$/,
@@ -143,6 +159,7 @@ export function Form(props) {
 					placeholder={"CPF"}
 					name={"cpf"}
 					onChange={handleDataChange}
+					isSubmitSuccessful={props.isSubmitSuccessful}
 					{...register("cpf", {
 						pattern: {
 							value: /([\d]{3}\.[\d]{3}\.[\d]{3}-[\d]{2}$)|^$/,
@@ -160,6 +177,7 @@ export function Form(props) {
 					name={"estado"}
 					onChange={handleDataChange}
 					value={props.data.estado}
+					isSubmitSuccessful={props.isSubmitSuccessful}
 					{...register("estado", {
 						required: {
 							value: requireAllCamps,

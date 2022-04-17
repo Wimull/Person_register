@@ -1,17 +1,14 @@
-import person_model from "../../person_model";
-
 const express = require("express");
-const app = express();
 const Person = require("../../person_model");
 require("dotenv").config();
 
+//Status code are most definitively not correct
 export default function handler(req, res) {
 	const { personCPF } = req.query;
 	const id = { cpf: personCPF[0] };
 	console.log(id);
 	if (req.method === "GET") {
 		//Find info by ID
-		console.log(req.method);
 		try {
 			Person.findOne(id, (err, data) => {
 				if (err)
@@ -28,7 +25,6 @@ export default function handler(req, res) {
 	} else if (req.method === "PUT") {
 		try {
 			Person.findOneAndUpdate(id, req.body, { new: true }, (err, data) => {
-				console.log(err);
 				if (err)
 					return res.status(504).json({
 						error: "failed to update data",

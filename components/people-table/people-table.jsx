@@ -17,7 +17,6 @@ import { useTheme } from '@table-library/react-table-library/theme';
 
 
 export function PeopleTable(props){
-  console.log(props.data, "data")
   const [search, setSearch] = useState("")
     const data = {nodes: props.data.filter((value) => (
       value.nome?.toLowerCase().includes(search) || value.sobrenome?.toLowerCase().includes(search) ||
@@ -84,7 +83,6 @@ export function PeopleTable(props){
     );
 
     function onSortChange(action, state) {
-      console.log(search)
       console.log(action, state);
     }
 

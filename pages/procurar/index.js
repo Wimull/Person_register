@@ -35,7 +35,7 @@ export default function () {
 			.reduce((res, key) => `${res}${key}=${formData[key]}&`, "?");
 
 		let response = await fetch(
-			`http://localhost:3000/api/entry/Register${getPacket}%20`
+			`http://localhost:3000/api/entry/Register${getPacket}`
 		);
 		let data = await response.json();
 		if (response.status == 200) {

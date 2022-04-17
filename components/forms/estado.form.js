@@ -1,9 +1,12 @@
 import InputMask from "react-input-mask";
 import { useForm } from "react-hook-form";
-import React, { useState } from "react";
+import React, { useLayoutEffect } from "react";
 
 export function InputEstado(props) {
-	const { register } = useForm();
+	const { register, reset } = useForm();
+	useLayoutEffect(() => {
+		reset({ estado: "" });
+	}, [props.isSubmitSuccessful]);
 
 	return (
 		<InputMask

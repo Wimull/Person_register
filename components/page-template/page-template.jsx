@@ -1,5 +1,8 @@
 import { Header } from "../../components";
 
+
+
+//Should have done more on PageTemplate
 export function PageTemplate({...props}){
     return(
         <>   
