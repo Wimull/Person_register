@@ -16,14 +16,13 @@ export default function () {
 		formState: { errors },
 	} = useForm();
 	const [formData, setFormData] = useState({});
-	const [peopleRegistered, setPeopleRegistered] = useState({});
+	const [peopleRegistered, setPeopleRegistered] = useState([{}]);
 	const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(0);
-	const [data, setData] = useState([{}]);
-	const fetch = async () => {
-		setData(await fetchPerson());
+	const getInitialState = async () => {
+		setPeopleRegistered(await fetchPerson());
 	};
 	useEffect(() => {
-		fetch();
+		getInitialState();
 	}, []);
 
 	async function onSubmit(e) {
@@ -35,16 +34,23 @@ export default function () {
 		let response = await fetch("http://localhost:3000/api/entry/Register/", {
 			method: "POST",
 			headers: {
+				Accept: "*/*",
 				"Content-type": "application/json",
 				"access-control-allow-origin": "*",
 			},
 			body: postPacket,
 		});
 		if (response.status === 200) setIsSubmitSuccessful(isSubmitSuccessful + 1);
-		let data = await response.json();
+		let data = [await response.json()];
+		data.map((obj) => (obj.id = obj.cpf.replace(/[\.-]/g, "")));
 		console.log(response, data);
 		setPeopleRegistered(data);
 	}
+
+	function onSelectChange(action, state) {
+		console.log(action, state);
+	}
+
 	return (
 		<PageTemplate>
 			<div className={Styles.title}>
@@ -59,12 +65,9 @@ export default function () {
 				isSubmitSuccessful={isSubmitSuccessful}
 				{...register("formulário")}
 			>
-				<Buttons href="/" />
+				<Buttons href="/" label={"Enviar"} />
 			</Form>
-			<PeopleTable data={data} />
-			<div>
-				<h1>{JSON.stringify(peopleRegistered)}</h1>
-			</div>
+			<PeopleTable data={peopleRegistered} onSelectChange={onSelectChange} />
 		</PageTemplate>
 	);
 }

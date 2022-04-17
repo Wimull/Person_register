@@ -1,32 +1,35 @@
 import React, { useState, useEffect } from "react";
+("react-hook-form");
 import {
 	PageTemplate,
 	Form,
 	Buttons,
 	PeopleTable,
 	fetchPerson,
+	fetchPersonByCpf,
 } from "../../components";
-import { useRowSelect } from "@table-library/react-table-library/select";
 import Styles from "../../styles/title.module.css";
 
 export default function () {
-	const [data, setData] = useState([{}]);
+	const [formData, setFormData] = useState({});
+	const [peopleRegistered, setPeopleRegistered] = useState([{}]);
+	const [id, setId] = useState({});
 	useEffect(() => {
-		fetch();
+		getInitialState();
 	}, []);
-	const fetch = async () => {
-		setData(await fetchPerson());
+	const getInitialState = async () => {
+		setPeopleRegistered(await fetchPerson());
 	};
-	console.log(data, "data");
 
 	function onSelectChange(action, state) {
-		console.log(action, state);
+		setId({ id: state.id });
 	}
 
-	const [formData, setFormData] = useState({});
-
-	function onSubmit(e) {
+	async function onSubmit(e) {
 		e.preventDefault;
+		if (id) {
+			setPeopleRegistered(await fetchPersonByCpf(id, formData, "PUT"));
+		}
 		console.log(formData);
 	}
 	return (
@@ -41,9 +44,9 @@ export default function () {
 				setData={setFormData}
 				onSubmit={onSubmit}
 			>
-				<Buttons href="/" />
+				<Buttons href="/" label={"Atualizar"} />
 			</Form>
-			<PeopleTable data={data} onSelectChange={onSelectChange} />
+			<PeopleTable data={peopleRegistered} onSelectChange={onSelectChange} />
 		</PageTemplate>
 	);
 }

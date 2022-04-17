@@ -7,14 +7,16 @@ import Styles from "../styles/title.module.css";
 
 export default function Home() {
 	const [data, setData] = useState([{}]);
-	const fetch = async () => {
+	const getInitialState = async () => {
 		setData(await fetchPerson());
 	};
 	useEffect(() => {
-		fetch();
+		getInitialState();
 	}, []);
 
-	console.log(data, "data");
+	function onSelectChange(action, state) {
+		console.log(action, state);
+	}
 	return (
 		<>
 			<div className={styles.container}>
@@ -29,7 +31,7 @@ export default function Home() {
 					<h1>Lista das Pessoas Registradas</h1>
 					<hr />
 				</div>
-				<PeopleTable data={data} />
+				<PeopleTable data={data} onSelectChange={onSelectChange} />
 			</PageTemplate>
 		</>
 	);

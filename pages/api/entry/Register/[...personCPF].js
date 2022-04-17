@@ -8,8 +8,9 @@ require("dotenv").config();
 export default function handler(req, res) {
 	const { personCPF } = req.query;
 	const id = { cpf: personCPF[0] };
-	console.log(req.method);
+	console.log(id);
 	if (req.method === "GET") {
+		console.log(req.method);
 		try {
 			Person.findOne(id, (err, data) => {
 				if (err)
@@ -19,36 +20,38 @@ export default function handler(req, res) {
 				return res.status(200).json(data); //If successfull
 			});
 		} catch (err) {
-			res.status(400).json({ error: "Input invalid", errorMessage: err });
+			return res
+				.status(400)
+				.json({ error: "Input invalid", errorMessage: err });
 		}
-	}
-	if (req.method === "PUT") {
+	} else if (req.method === "PUT") {
 		try {
-			findOneAndUpdate(id, req.body, { new: true }, (err, data) => {
+			Person.findOneAndUpdate(id, req.body, { new: true }, (err, data) => {
+				console.log(err);
 				if (err)
-					res.status(504).json({
+					return res.status(504).json({
 						error: "failed to update data",
 						errorMessage: err.message,
 					});
-				res.status(200).json(data);
+				return res.status(200).json(data);
 			});
 		} catch (err) {
 			return res
 				.status(400)
 				.json({ error: "Input invalid", errorMesage: err.message });
 		}
-	}
-	if (req.method === "DELETE") {
+	} else if (req.method === "DELETE") {
 		try {
 			Person.findOneAndRemove(id, (err, data) => {
 				if (err)
-					if (err) res.status(502).json({ error: "failed to delete data" });
-				res.status(201).json(data);
+					return res.status(502).json({ error: "failed to delete data" });
+				return res.status(201).json(data);
 			});
 		} catch (err) {
-			res.status(400).json({ error: "Input invalid", errorMesage: err });
+			return res.status(400).json({ error: "Input invalid", errorMesage: err });
 		}
 	} else {
+		console.log("hi");
 		return res
 			.status(405)
 			.json({ error: "Method not allowed", method: req.method });

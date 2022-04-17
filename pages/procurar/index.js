@@ -16,14 +16,13 @@ export default function () {
 		formState: { errors },
 	} = useForm();
 	const [formData, setFormData] = useState({});
-	const [peopleRegistered, setPeopleRegistered] = useState({});
+	const [peopleRegistered, setPeopleRegistered] = useState([{}]);
 	const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(0);
-	const [data, setData] = useState([{}]);
-	const fetch = async () => {
-		setData(await fetchPerson());
+	const getInitialState = async () => {
+		setPeopleRegistered(await fetchPerson());
 	};
 	useEffect(() => {
-		fetch();
+		getInitialState();
 	}, []);
 
 	async function onSubmit(e) {
@@ -33,12 +32,17 @@ export default function () {
 			.reduce((res, key) => `${res}${key}=${formData[key]}&`, "?");
 
 		let response = await fetch(
-			`http://localhost:3000/api/entry/Register${getPacket}`
+			`http://localhost:3000/api/entry/Register${getPacket}%20`
 		);
 		if (response.status == 200) setIsSubmitSuccessful(isSubmitSuccessful + 1);
 		let data = await response.json();
+		data.map((obj) => (obj.id = obj.cpf.replace(/[\.-]/g, ""))); //Creates and id property so as RowSelect works properly (it only looks for property named "id")
 		console.log(response, data);
 		setPeopleRegistered(data);
+	}
+
+	function onSelectChange(action, state) {
+		console.log(action, state);
 	}
 	return (
 		<PageTemplate>
@@ -54,12 +58,9 @@ export default function () {
 				isSubmitSuccessful={isSubmitSuccessful}
 				{...register("formulário")}
 			>
-				<Buttons href="/" />
+				<Buttons href="/" label={"Procurar"} />
 			</Form>
-			<PeopleTable data={data} />
-			<div>
-				<h1>{JSON.stringify(peopleRegistered)}</h1>
-			</div>
+			<PeopleTable data={peopleRegistered} onSelectChange={onSelectChange} />
 		</PageTemplate>
 	);
 }
