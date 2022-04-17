@@ -121,7 +121,7 @@ export function PeopleTable(props){
                   <HeaderCellSort  resize={resize} sortKey="LOGRADOURO">Logradouro</HeaderCellSort >
                   <HeaderCellSort  resize={resize} sortKey="EMAIL">Email</HeaderCellSort >
                   <HeaderCellSort  resize={resize} sortKey="TELEFONE">Telefone</HeaderCellSort >
-                  <HeaderCellSelect />
+
                 </HeaderRow>
               </Header>
 
@@ -137,7 +137,7 @@ export function PeopleTable(props){
                     <Cell>{item.logradouro}</Cell>
                     <Cell>{item.email}</Cell>
                     <Cell>{item.telefone}</Cell>
-                    <CellSelect item={item} />
+
                   </Row>
                 ))}
               </Body>
