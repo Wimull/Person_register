@@ -11,6 +11,7 @@ import {
   HeaderCell,
   Cell,
 } from '@table-library/react-table-library/table';
+import { useRowSelect, HeaderCellSelect,CellSelect,SelectTypes,} from '@table-library/react-table-library/select';
 import { useTheme } from '@table-library/react-table-library/theme';
 
 const testJson = [
@@ -156,13 +157,12 @@ const testJson = [
 
 export function PeopleTable(props){
   const [search, setSearch] = useState("")
-  console.log(search)
-    const data = {nodes: testJson.filter((value) => (
-      value.nome.toLowerCase().includes(search) || value.sobrenome.toLowerCase().includes(search) ||
-      value.nacionalidade.toLowerCase().includes(search) || value.cep.toLowerCase().includes(search) ||
-      value.estado.toLowerCase().includes(search) || value.cidade.toLowerCase().includes(search) ||
-      value.logradouro.toLowerCase().includes(search) || value.email.toLowerCase().includes(search) ||
-      value.telefone.toLowerCase().includes(search) 
+    const data = {nodes: props.data.filter((value) => (
+      value.nome?.toLowerCase().includes(search) || value.sobrenome?.toLowerCase().includes(search) ||
+      value.nacionalidade?.toLowerCase().includes(search) || value.cep?.toLowerCase().includes(search) ||
+      value.estado?.toLowerCase().includes(search) || value.cidade?.toLowerCase().includes(search) ||
+      value.logradouro?.toLowerCase().includes(search) || value.email?.toLowerCase().includes(search) ||
+      value.telefone?.toLowerCase().includes(search) 
       ))
 
     }
@@ -192,6 +192,11 @@ export function PeopleTable(props){
         min-width: 50px;
         width: 200px;
       }
+      &:nth-of-type(10){
+        min-width: 50px;
+        width: 50px;
+
+      }
       `
 
     });
@@ -220,6 +225,15 @@ export function PeopleTable(props){
       console.log(search)
       console.log(action, state);
     }
+    const select = useRowSelect(data, {
+      onChange: props.onSelectChange,
+    },
+    
+    {
+      rowSelect: SelectTypes.SingleSelect,
+      buttonSelect: SelectTypes.SingleSelect,
+    });
+
 
     return(
       <>
@@ -233,7 +247,7 @@ export function PeopleTable(props){
         className={Styles.forms}
 
       >
-        <Table data={data} sort={sort} theme={theme}  layout={{ custom: true, horizontalScroll: true }}>
+        <Table data={data} sort={sort} theme={theme}  layout={{ custom: true, horizontalScroll: true }} select={select}>
           {(tableList) => (
             <>
               <Header>
@@ -247,12 +261,13 @@ export function PeopleTable(props){
                   <HeaderCellSort  resize={resize} sortKey="LOGRADOURO">Logradouro</HeaderCellSort >
                   <HeaderCellSort  resize={resize} sortKey="EMAIL">Email</HeaderCellSort >
                   <HeaderCellSort  resize={resize} sortKey="TELEFONE">Telefone</HeaderCellSort >
+                  <HeaderCellSelect />
                 </HeaderRow>
               </Header>
 
               <Body>
                 {tableList.map((item)=>(
-                  <Row key={item._id} item={item} className={Styles.row}>
+                  <Row key={item.id} item={item} className={Styles.row}>
                     <Cell>{item.nome}</Cell>
                     <Cell>{item.sobrenome}</Cell>
                     <Cell>{item.nacionalidade}</Cell>
@@ -262,6 +277,7 @@ export function PeopleTable(props){
                     <Cell>{item.logradouro}</Cell>
                     <Cell>{item.email}</Cell>
                     <Cell>{item.telefone}</Cell>
+                    <CellSelect item={item} />
                   </Row>
                 ))}
               </Body>

@@ -1,13 +1,28 @@
-import React, { useState } from "react";
-import { PageTemplate, Form, Buttons, PeopleTable } from "../../components";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import {
+	PageTemplate,
+	Form,
+	Buttons,
+	PeopleTable,
+	fetchPerson,
+} from "../../components";
+import { useRowSelect } from "@table-library/react-table-library/select";
 import Styles from "../../styles/title.module.css";
+
 export default function () {
-	const {
-		handleSubmit,
-		register,
-		formState: { errors },
-	} = useForm();
+	const [data, setData] = useState([{}]);
+	useEffect(() => {
+		fetch();
+	}, []);
+	const fetch = async () => {
+		setData(await fetchPerson());
+	};
+	console.log(data, "data");
+
+	function onSelectChange(action, state) {
+		console.log(action, state);
+	}
+
 	const [formData, setFormData] = useState({});
 
 	function onSubmit(e) {
@@ -25,11 +40,10 @@ export default function () {
 				data={formData}
 				setData={setFormData}
 				onSubmit={onSubmit}
-				{...register("formulário")}
 			>
 				<Buttons href="/" />
 			</Form>
-			<PeopleTable />
+			<PeopleTable data={data} onSelectChange={onSelectChange} />
 		</PageTemplate>
 	);
 }

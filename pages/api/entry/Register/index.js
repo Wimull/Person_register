@@ -15,7 +15,6 @@ export default function handler(req, res) {
 				return res
 					.status(500)
 					.json({ error: "Coundn't get data", errorMessage: err });
-			console.log(data);
 			return res.status(200).json(data);
 		});
 	}

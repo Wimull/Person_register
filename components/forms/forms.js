@@ -42,7 +42,7 @@ export function Form(props) {
 				setValue("cpf", e.target.value);
 				props.setData({
 					...props.data,
-					[e.target.name]: e.target.value,
+					[e.target.name]: e.target.value.replace(/[\.-]/g, ""),
 				});
 				break;
 			case "cep":

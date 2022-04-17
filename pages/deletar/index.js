@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { PageTemplate, Form, Buttons, PeopleTable } from "../../components";
+import React, { useState, useEffect } from "react";
+import {
+	PageTemplate,
+	Form,
+	Buttons,
+	PeopleTable,
+	fetchPerson,
+} from "../../components";
 import { useForm } from "react-hook-form";
 import Styles from "../../styles/title.module.css";
 export default function () {
@@ -9,6 +15,13 @@ export default function () {
 		formState: { errors },
 	} = useForm();
 	const [formData, setFormData] = useState({});
+	const [data, setData] = useState([{}]);
+	const fetch = async () => {
+		setData(await fetchPerson());
+	};
+	useEffect(() => {
+		fetch();
+	}, []);
 
 	function onSubmit(e) {
 		e.preventDefault;
@@ -29,7 +42,7 @@ export default function () {
 			>
 				<Buttons href="/" />
 			</Form>
-			<PeopleTable />
+			<PeopleTable data={data} />
 		</PageTemplate>
 	);
 }
