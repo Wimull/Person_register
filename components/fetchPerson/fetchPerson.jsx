@@ -21,7 +21,7 @@ export async function fetchPersonByCpf(id, body, method){
     }
     )
     const data = [await response.json()]
-    if (response.status != 200) return ["error",response.status, {error: data}];
+    if (response.status > 299) return ["error",response.status, {error: data}];
     data.map((obj) => obj.id = obj.cpf.replace(/[\.-]/g,""))  //Creates and id property so as "RowSelect" works properly (it only looks for property named "id")
     return data
 }
