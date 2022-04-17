@@ -185,7 +185,7 @@ export function Form(props) {
 						},
 						pattern: {
 							value:
-								/(A[CLPM])|(BA)|(CE)|(DF)|(M[ATSG])|(P[ABREI])|(R[JNSOR])|(S[CPE])|(TO)|^$/,
+								/(A[CLPM])|(BA)|(CE)|(DF)|(ES)|(GO)|(M[ATSG])|(P[ABREI])|(R[JNSOR])|(S[CPE])|(TO)|^$/,
 							message: "Estado inválido ",
 						},
 						onChange: handleDataChange,
